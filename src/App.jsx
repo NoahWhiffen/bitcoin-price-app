@@ -27,7 +27,10 @@ const App = () => {
 
     // Fetch prices when the component mounts and every 30 seconds thereafter
     useEffect(() => {
+      fetchPrices();
+      const interval = setInterval(fetchPrices, 30000);
 
+      return () => clearInterval(interval);
     }, []);
 
     return (
