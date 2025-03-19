@@ -1,6 +1,7 @@
 // This page will handle fetching Bitcoin prices, automatic updates, and the refresh button
 
 import React, { useState, useEffect } from 'react';
+import Header from './Header';
 import PriceDetails from './PriceDetails';
 
 const App = () => {
@@ -35,6 +36,7 @@ const App = () => {
 
     return (
         <div className="app-container">
+          <Header/>
           <h1>Bitcoin Price Tracker</h1>
           <PriceDetails prices={prices} loading={loading} />
           <button className="refresh-button" onClick={fetchPrice}>
