@@ -39,7 +39,7 @@ const App = () => {
           <Header/>
           <h1>Bitcoin Price Tracker</h1>
           <PriceDetails prices={prices} loading={loading} />
-          <button className="refresh-button" onClick={fetchPrice}>
+          <button className="refresh-button" onClick={fetchPrices}>
             Refresh Price
           </button>
         </div>
