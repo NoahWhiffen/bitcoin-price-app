@@ -1,0 +1,42 @@
+.App {
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #6e7dff, #4e6eff);
+  color: white;
+  padding: 30px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+button.refresh-btn {
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  background-color: #ffd700;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.3s;
+  margin-top: 20px;
+}
+
+button.refresh-btn:hover {
+  background-color: #ffcc00;
+  transform: scale(1.05);
+}
+
+button.refresh-btn:focus {
+  outline: none;
+}

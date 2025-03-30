@@ -1,49 +1,48 @@
-// This page will handle fetching Bitcoin prices, automatic updates, and the refresh button
-
-import React, { useState, useEffect } from 'react';
-import Header from './Header';
+import React, { useEffect, useState } from 'react';
 import PriceDetails from './PriceDetails';
+import '../styles/App.css';
 
 const App = () => {
-    const [prices, setPrices] = useState({cad: null, usd: null, eur: null, gbp: null});
-    const [loading, setLoading] = useState(true);
+  const [prices, setPrices] = useState({
+    usd: null,
+    eur: null,
+    gbp: null,
+    cad: null
+  });
+  const [loading, setLoading] = useState(true);
 
-    // Function to fetch Bitcoin prices
-    const fetchPrices = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=cad');
-        const data = await response.json();
-        setPrices({
-          cad: data.bitcoin.cad,
-          usd: data.bitcoin.usd,
-          eur: data.bitcoin.eur,
-          gbp: data.bitcoin.gbp
-        });
-      } catch (error) {
-        console.error('Error fetching Bitcoin prices: ', error);
-      }
-      setLoading(false);
-    };
+  // Fetch the Bitcoin price
+  const fetchPrice = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd,eur,gbp,cad'
+      );
+      const data = await response.json();
+      setPrices({
+        usd: Math.round(data.bitcoin.usd * 100),
+        eur: Math.round(data.bitcoin.eur * 100),
+        gbp: Math.round(data.bitcoin.gbp * 100),
+        cad: Math.round(data.bitcoin.cad * 100)
+      });
+    } catch (error) {
+      console.error("Error fetching the Bitcoin price", error);
+    }
+    setLoading(false);
+  };
 
-    // Fetch prices when the component mounts and every 30 seconds thereafter
-    useEffect(() => {
-      fetchPrices();
-      const interval = setInterval(fetchPrices, 30000);
+  useEffect(() => {
+    fetchPrice();
+    const interval = setInterval(fetchPrice, 30000); // Update every 30 seconds
+    return () => clearInterval(interval);
+  }, []);
 
-      return () => clearInterval(interval);
-    }, []);
-
-    return (
-        <div className="app-container">
-          <Header/>
-          <h1>Bitcoin Price Tracker</h1>
-          <PriceDetails prices={prices} loading={loading} />
-          <button className="refresh-button" onClick={fetchPrices}>
-            Refresh Price
-          </button>
-        </div>
-    );
+  return (
+    <div className="App">
+      <h1>Bitcoin Price Tracker</h1>
+      <PriceDetails prices={prices} loading={loading} fetchPrice={fetchPrice} />
+    </div>
+  );
 };
 
 export default App;

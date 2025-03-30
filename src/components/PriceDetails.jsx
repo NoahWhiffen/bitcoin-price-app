@@ -1,27 +1,30 @@
-// This page will display the Bitcoin prices in USD, EUR, GBP and CAD.
-
 import React from 'react';
-import Header from './Header';
+import '../styles/PriceDetails.css';
 
-const PriceDetails = ({prices, loading}) => {
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    return (
-        <div className='app-container'>
-            <Header />
-            <div className="price-details">
-                <h2>Bitcoin Price:</h2>
-                <ul>
-                    <li>USD: ${prices.usd}</li>
-                    <li>EUR: €{prices.eur}</li>
-                    <li>GBP: £{prices.gbp}</li>
-                    <li>CAD: C${prices.cad}</li>
-                </ul>
-            </div>
+const PriceDetails = ({ prices, loading, fetchPrice }) => {
+  return (
+    <div className="price-container">
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="price-box">
+          <div className="price">
+            <h2>USD: ${ (prices.usd / 100).toFixed(2) }</h2>
+          </div>
+          <div className="price">
+            <h2>EUR: €{ (prices.eur / 100).toFixed(2) }</h2>
+          </div>
+          <div className="price">
+            <h2>GBP: £{ (prices.gbp / 100).toFixed(2) }</h2>
+          </div>
+          <div className="price">
+            <h2>CAD: ${ (prices.cad / 100).toFixed(2) }</h2>
+          </div>
         </div>
-    );
+      )}
+      <button className="refresh-btn" onClick={fetchPrice}>Refresh Price</button>
+    </div>
+  );
 };
 
 export default PriceDetails;
